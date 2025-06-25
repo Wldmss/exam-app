@@ -1,0 +1,43 @@
+[package]
+name = "exam-app"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "exam_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri-plugin-global-shortcut = "2"
+winapi = { version = "0.3", features = ["winuser"] }
+sysinfo = "0.35.2"
+tauri-plugin-dialog = "2"
+
+[[bin]]
+name = "exam-app"
+path = "src/main.rs"
+
+[profile.release]
+panic = "abort"      # 패닉 시 프로그램을 즉시 종료 (용량 감소)
+codegen-units = 1  # 병렬 컴파일 비활성화 (최적화에 도움)
+lto = true           # 링크 시점 최적화 (전체 코드 최적화)
+opt-level = "z"      # 최대 사이즈 최적화
+strip = true         # 디버깅 심볼 제거 (가장 효과적)
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-updater = "2"
+
