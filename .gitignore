@@ -40,3 +40,5 @@ yarn-error.log*
 *.dmg
 *.msi
 *.exe
+
+.svelte-kit
