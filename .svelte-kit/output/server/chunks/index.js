@@ -116,6 +116,7 @@ export {
   HYDRATION_START as a,
   HYDRATION_END as b,
   pop as c,
+  current_component as d,
   getContext as g,
   push as p,
   render as r,

@@ -16,12 +16,14 @@ cargo build
 
 -- macOS
 npm run tauri build
+    -> src-tauri/target/release/bundle/ 에서 확인
 
 -- Windows
 npm run tauri build -- --runner cargo-xwin --target x86_64-pc-windows-msvc
+    -> src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/
 ```
 
-rc-tauri/target/release/bundle/ 에서 확인
+
 
 ---
 

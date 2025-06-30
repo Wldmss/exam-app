@@ -1,4 +1,10 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+
+#![cfg_attr(
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
+)]
+
 use sysinfo::System;
 use tauri_plugin_global_shortcut::Builder as GlobalShortcutBuilder;
 
@@ -37,6 +43,11 @@ fn is_process_running(process_name: String) -> bool {
     false
 }
 
+#[tauri::command]
+fn close_main_window(app_handle: tauri::AppHandle) {
+    app_handle.exit(0);
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -46,7 +57,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             greet,
             is_process_running,
-            has_multiple_monitors
+            has_multiple_monitors,
+            close_main_window
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
